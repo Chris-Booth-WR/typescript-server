@@ -1,6 +1,6 @@
-import { Error } from "../../common/common.error";
-import { User } from "../models/users.user";
-import { IUserRepo } from "./users.repository";
+import { Error } from "../../common/Error";
+import { User } from "../../models/User";
+import { IUserRepo } from "./IRepository";
 
 export class LocalUsers implements IUserRepo {
     private users: User[];

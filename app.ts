@@ -3,10 +3,10 @@ import * as http from 'http';
 import * as winston from 'winston';
 import * as expressWinston from 'express-winston';
 import cors from 'cors'
-import { CommonRoutesConfig } from './common/common.routes.config';
-import { UsersRoutes } from './users/users.routes.config';
+import { CommonRoutesConfig } from './routes/CommonRoutesConfig';
+import { UsersRoutes } from './routes/UsersRoutes';
 import debug from 'debug';
-import { Error } from './common/common.error';
+import { Error } from './common/Error';
 import e from 'express';
 
 const app: express.Application = express();

@@ -1,8 +1,8 @@
-import { CommonRoutesConfig } from '../common/common.routes.config';
+import { CommonRoutesConfig } from './CommonRoutesConfig';
 import express from 'express';
-import { LocalUsers } from './repository/users.local';
-import { User } from "./models/users.user";
-import { IUserRepo } from './repository/users.repository';
+import { LocalUsers } from '../repository/users/LocalUsers';
+import { User } from "../models/User";
+import { IUserRepo } from '../repository/users/IRepository';
 
 export class UsersRoutes extends CommonRoutesConfig {
     users: IUserRepo;

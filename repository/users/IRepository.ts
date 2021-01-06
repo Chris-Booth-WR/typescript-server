@@ -1,4 +1,4 @@
-import { User } from "../models/users.user";
+import { User } from "../../models/User";
 export interface IUserRepo {
     list(order: string): User[];
     item(id: number): User;
