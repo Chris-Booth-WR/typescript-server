@@ -1,6 +1,8 @@
-import { Error } from "../common/common.error";
+import { Error } from "../../common/common.error";
+import { User } from "../models/users.user";
+import { IUserRepo } from "./users.repository";
 
-export class Users {
+export class LocalUsers implements IUserRepo {
     private users: User[];
     constructor() {
         this.users = [
@@ -57,17 +59,5 @@ export class Users {
      */
     public create(item: User): void {
         this.users.push(item);
-    }
-}
-
-export class User {
-    Id: number;
-    FirstName: string;
-    LastName: string;
-
-    constructor(id: number, firstName: string, lastName: string) {
-        this.Id = id;
-        this.FirstName = firstName;
-        this.LastName = lastName;
     }
 }

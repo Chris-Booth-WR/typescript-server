@@ -1,12 +1,14 @@
 import { CommonRoutesConfig } from '../common/common.routes.config';
 import express from 'express';
-import { User, Users } from './users.local';
+import { LocalUsers } from './repository/users.local';
+import { User } from "./models/users.user";
+import { IUserRepo } from './repository/users.repository';
 
 export class UsersRoutes extends CommonRoutesConfig {
-    users: Users;
+    users: IUserRepo;
     constructor(app: express.Application) {
         super(app, 'UsersRoutes');
-        this.users = new Users();
+        this.users = new LocalUsers();
     }
 
     configureRoutes() {
