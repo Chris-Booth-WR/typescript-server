@@ -1,11 +1,14 @@
-export class User {
-    Id: number;
-    FirstName: string;
-    LastName: string;
+import { IUserModel } from "./IUserModel";
+
+
+export class User implements IUserModel {
+    id: number;
+    firstName: string;
+    lastName: string;
 
     constructor(id: number, firstName: string, lastName: string) {
-        this.Id = id;
-        this.FirstName = firstName;
-        this.LastName = lastName;
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 }

@@ -7,6 +7,7 @@ import { CommonRoutesConfig } from './routes/CommonRoutesConfig';
 import { UsersRoutes } from './routes/UsersRoutes';
 import debug from 'debug';
 import * as errorMiddelWare from './middleware/Error'
+import { MarketingRoutes } from './routes/MarketingRoutes';
 
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
@@ -28,6 +29,7 @@ app.use(expressWinston.logger({
 }));
 
 routes.push(new UsersRoutes(app));
+routes.push(new MarketingRoutes(app));
 
 app.use(expressWinston.errorLogger({
     transports: [

@@ -1,10 +1,12 @@
 import { Error } from "../../common/Error";
+import { IUserModel } from "../../models/IUserModel";
 import { User } from "../../models/User";
-import { IUserRepo } from "./IRepository";
+import { RepoBase } from "../IRepository";
 
-export class LocalUsers implements IUserRepo {
-    private users: User[];
+export class LocalUsers extends RepoBase<IUserModel> {
+    private users: IUserModel[];
     constructor() {
+        super();
         this.users = [
             new User(1, "Chris", "Booth"),
             new User(2, "Dan", "Ransom"),
@@ -16,15 +18,15 @@ export class LocalUsers implements IUserRepo {
     /**
      * list
      */
-    public list(order: string = ""): User[] {
-        return this.users.sort((a, b) => order == "desc" ? b.Id - a.Id : a.Id - b.Id);
+    public list(order: string = ""): IUserModel[] {
+        return this.users.sort((a, b) => order == "desc" ? b.id - a.id : a.id - b.id);
     }
 
     /**
      * item
      */
-    public item(id: number): User {
-        const user = this.users.find(item => item.Id == id);
+    public item(id: number): IUserModel {
+        const user = this.users.find(item => item.id == id);
         if (user)
             return user;
 
@@ -34,8 +36,8 @@ export class LocalUsers implements IUserRepo {
     /**
      * update
      */
-    public update(item: User): void {
-        const user = this.users.find(user => user.Id == item.Id);
+    public update(item: IUserModel): void {
+        const user = this.users.find(user => user.id == item.id);
         if (user) {
             this.users[this.users.indexOf(user)] = item;
         }
@@ -44,10 +46,10 @@ export class LocalUsers implements IUserRepo {
     /**
      * delete
      */
-    public delete(item: User): void {
-        let users: User[] = [];
+    public delete(item: IUserModel): void {
+        let users: IUserModel[] = [];
         this.users.forEach(user => {
-            if (user.Id != item.Id) {
+            if (user.id != item.id) {
                 users.push(user);
             }
         });
@@ -57,7 +59,7 @@ export class LocalUsers implements IUserRepo {
     /**
      * create
      */
-    public create(item: User): void {
+    public create(item: IUserModel): void {
         this.users.push(item);
     }
 }

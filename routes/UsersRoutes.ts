@@ -1,24 +1,24 @@
 import { CommonRoutesConfig } from './CommonRoutesConfig';
 import express from 'express';
 import { LocalUsers } from '../repository/users/LocalUsers';
-import { User } from "../models/User";
-import { IUserRepo } from '../repository/users/IRepository';
+import { IUserModel } from "../models/IUserModel";
+import { RepoBase } from '../repository/IRepository';
 
 export class UsersRoutes extends CommonRoutesConfig {
-    users: IUserRepo;
+    repo: RepoBase<IUserModel>;
     constructor(app: express.Application) {
         super(app, 'UsersRoutes');
-        this.users = new LocalUsers();
+        this.repo = new LocalUsers();
     }
 
     configureRoutes() {
         this.app.route(`/users`)
             .get((req: express.Request, res: express.Response) => {
-                res.status(200).json(this.users.list(req.query["order"]?.toString() ?? "asc"));
+                res.status(200).json(this.repo.list(req.query["order"]?.toString() ?? "asc"));
             })
             .post((req: express.Request, res: express.Response) => {
-                const user = new User(req.body["id"], req.body["firstName"], req.body["lastName"]);
-                res.status(200).send(this.users.create(user));
+                const user: IUserModel = req.body;
+                res.status(200).send(this.repo.create(user));
             });
 
         this.app.route(`/users/:userId`)
@@ -26,15 +26,15 @@ export class UsersRoutes extends CommonRoutesConfig {
                 next();
             })
             .get((req: express.Request, res: express.Response) => {
-                res.status(200).send(this.users.item(Number.parseInt(req.params.userId)));
+                res.status(200).send(this.repo.item(Number.parseInt(req.params.userId)));
             })
             .put((req: express.Request, res: express.Response) => {
-                const user = new User(req.body["id"], req.body["firstName"], req.body["lastName"]);
-                res.status(200).send(this.users.update(user));
+                const user: IUserModel = req.body;
+                res.status(200).send(this.repo.update(user));
             })
             .delete((req: express.Request, res: express.Response) => {
-                const user = new User(req.body["id"], req.body["firstName"], req.body["lastName"]);
-                res.status(200).send(this.users.delete(user));
+                const user: IUserModel = req.body;
+                res.status(200).send(this.repo.delete(user));
             });
 
         return this.app;
