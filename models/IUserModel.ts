@@ -1,7 +1,7 @@
 export interface IUserModel {
-    username: any;
-    password: any;
-    role: any;
+    username: string;
+    password: string;
+    role: string;
     firstName: string;
     lastName: string;
 }

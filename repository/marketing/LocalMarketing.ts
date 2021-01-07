@@ -14,7 +14,7 @@ export class LocalMarketing extends RepoBase<IMarketingRequest, number> {
     delete(item: IMarketingRequest): void {
         throw new Error("Method not implemented.");
     }
-    create(item: IMarketingRequest): void {
+    create(item: IMarketingRequest): IMarketingRequest {
         throw new Error("Method not implemented.");
     }
 }

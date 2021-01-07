@@ -59,7 +59,8 @@ export class LocalUsers extends RepoBase<IUserModel, string> {
     /**
      * create
      */
-    public create(item: IUserModel): void {
+    public create(item: IUserModel): IUserModel {
         this.users.push(item);
+        return item;
     }
 }
