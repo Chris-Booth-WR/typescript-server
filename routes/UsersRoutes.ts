@@ -5,7 +5,7 @@ import { IUserModel } from "../models/IUserModel";
 import { RepoBase } from '../repository/IRepository';
 
 export class UsersRoutes extends CommonRoutesConfig {
-    repo: RepoBase<IUserModel>;
+    repo: RepoBase<IUserModel, string>;
     constructor(app: express.Application) {
         super(app, 'UsersRoutes');
         this.repo = new LocalUsers();
@@ -26,7 +26,7 @@ export class UsersRoutes extends CommonRoutesConfig {
                 next();
             })
             .get((req: express.Request, res: express.Response) => {
-                res.status(200).send(this.repo.item(Number.parseInt(req.params.userId)));
+                res.status(200).send(this.repo.item(req.params.username));
             })
             .put((req: express.Request, res: express.Response) => {
                 const user: IUserModel = req.body;

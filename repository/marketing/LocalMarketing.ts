@@ -1,7 +1,7 @@
 import { IMarketingRequest } from "../../models/IMarketingRequest";
 import { RepoBase } from "../IRepository";
 
-export class LocalMarketing extends RepoBase<IMarketingRequest> {
+export class LocalMarketing extends RepoBase<IMarketingRequest, number> {
     list(order: string): IMarketingRequest[] {
         throw new Error("Method not implemented.");
     }

@@ -6,7 +6,7 @@ import { LocalMarketing } from "../repository/marketing/LocalMarketing";
 import { CommonRoutesConfig } from "./CommonRoutesConfig";
 
 export class QuoteRoutes extends CommonRoutesConfig {
-    repo: RepoBase<IMarketingRequest>;
+    repo: RepoBase<IMarketingRequest, number>;
     constructor(app: express.Application) {
         super(app, 'MarketingRoutes');
         this.repo = new LocalMarketing();

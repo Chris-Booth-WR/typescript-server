@@ -3,15 +3,15 @@ import { IUserModel } from "../../models/IUserModel";
 import { User } from "../../models/User";
 import { RepoBase } from "../IRepository";
 
-export class LocalUsers extends RepoBase<IUserModel> {
+export class LocalUsers extends RepoBase<IUserModel, string> {
     private users: IUserModel[];
     constructor() {
         super();
         this.users = [
-            new User(1, "Chris", "Booth", "cbooth", "cb00th", "Admin"),
-            new User(2, "Dan", "Ransom", "dransom", "drans0m", "Admin"),
-            new User(3, "Dom", "Sutherland", "dsutherland", "dsuth3rland", "Admin"),
-            new User(4, "Emma", "Oitaven", "eoitaven", "301taven", "Admin")
+            new User("Chris", "Booth", "cbooth", "cb00th", "Admin"),
+            new User("Dan", "Ransom", "dransom", "drans0m", "Admin"),
+            new User("Dom", "Sutherland", "dsutherland", "dsuth3rland", "Admin"),
+            new User("Emma", "Oitaven", "eoitaven", "301taven", "Admin")
         ];
     }
 
@@ -19,14 +19,14 @@ export class LocalUsers extends RepoBase<IUserModel> {
      * list
      */
     public list(order: string = ""): IUserModel[] {
-        return this.users.sort((a, b) => order == "desc" ? b.id - a.id : a.id - b.id);
+        return this.users.sort((a, b) => order == "desc" ? b.username.localeCompare(a.username) : a.username.localeCompare(b.username));
     }
 
     /**
      * item
      */
-    public item(id: number): IUserModel {
-        const user = this.users.find(item => item.id == id);
+    public item(id: string): IUserModel {
+        const user = this.users.find(item => item.username == id);
         if (user)
             return user;
 
@@ -37,7 +37,7 @@ export class LocalUsers extends RepoBase<IUserModel> {
      * update
      */
     public update(item: IUserModel): void {
-        const user = this.users.find(user => user.id == item.id);
+        const user = this.users.find(user => user.username == item.username);
         if (user) {
             this.users[this.users.indexOf(user)] = item;
         }
@@ -49,7 +49,7 @@ export class LocalUsers extends RepoBase<IUserModel> {
     public delete(item: IUserModel): void {
         let users: IUserModel[] = [];
         this.users.forEach(user => {
-            if (user.id != item.id) {
+            if (user.username != item.username) {
                 users.push(user);
             }
         });

@@ -1,6 +1,8 @@
 import * as jwt from "jsonwebtoken";
 import express from "express";
+import { LocalUsers } from "../repository/users/LocalUsers";
 
+const userRepo = new LocalUsers();
 export function authenticateJWT(req: express.Request, res: express.Response, next:any) {
     const authHeader = req.headers.authorization;
     const accessTokenSecret = 'youraccesstokensecret';
@@ -12,7 +14,7 @@ export function authenticateJWT(req: express.Request, res: express.Response, nex
                 throw err;
             }
 
-            req.body.user = user;
+            req.body.user = userRepo.item(user.username);
             next();
         });
     } else {
