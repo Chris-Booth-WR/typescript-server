@@ -8,10 +8,10 @@ export class LocalUsers extends RepoBase<IUserModel> {
     constructor() {
         super();
         this.users = [
-            new User(1, "Chris", "Booth"),
-            new User(2, "Dan", "Ransom"),
-            new User(3, "Dom", "Sutherland"),
-            new User(4, "Emma", "Oitaven")
+            new User(1, "Chris", "Booth", "cbooth", "cb00th", "Admin"),
+            new User(2, "Dan", "Ransom", "dransom", "drans0m", "Admin"),
+            new User(3, "Dom", "Sutherland", "dsutherland", "dsuth3rland", "Admin"),
+            new User(4, "Emma", "Oitaven", "eoitaven", "301taven", "Admin")
         ];
     }
 

@@ -3,11 +3,14 @@ import * as http from 'http';
 import * as winston from 'winston';
 import * as expressWinston from 'express-winston';
 import cors from 'cors'
+import debug from 'debug';
+import * as errorMiddelWare from './middleware/ErrorMiddleware'
+
 import { CommonRoutesConfig } from './routes/CommonRoutesConfig';
 import { UsersRoutes } from './routes/UsersRoutes';
-import debug from 'debug';
-import * as errorMiddelWare from './middleware/Error'
-import { MarketingRoutes } from './routes/MarketingRoutes';
+import { QuoteRoutes } from './routes/QuoteRoutes';
+import { PayinMethodsRoutes } from './routes/PayinMethodsRoutes';
+import { AuthRoutes } from './routes/AuthRoutes';
 
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
@@ -29,7 +32,9 @@ app.use(expressWinston.logger({
 }));
 
 routes.push(new UsersRoutes(app));
-routes.push(new MarketingRoutes(app));
+routes.push(new QuoteRoutes(app));
+routes.push(new PayinMethodsRoutes(app));
+routes.push(new AuthRoutes(app));
 
 app.use(expressWinston.errorLogger({
     transports: [
