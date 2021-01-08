@@ -1,20 +1,20 @@
-import { IMarketingRequest } from "../../models/IMarketingRequest";
-import { RepoBase } from "../IRepository";
+import { MarketingRequest } from "../../models/MarketingRequest";
+import { Repository } from "../Repository";
 
-export class LocalMarketing extends RepoBase<IMarketingRequest, number> {
-    list(order: string): IMarketingRequest[] {
+export class LocalMarketing extends Repository<MarketingRequest, number> {
+    list(order: string): MarketingRequest[] {
         throw new Error("Method not implemented.");
     }
-    item(id: number): IMarketingRequest {
+    item(id: number): MarketingRequest {
         throw new Error("Method not implemented.");
     }
-    update(item: IMarketingRequest): void {
+    update(item: MarketingRequest): void {
         throw new Error("Method not implemented.");
     }
-    delete(item: IMarketingRequest): void {
+    delete(item: MarketingRequest): void {
         throw new Error("Method not implemented.");
     }
-    create(item: IMarketingRequest): IMarketingRequest {
+    create(item: MarketingRequest): MarketingRequest {
         throw new Error("Method not implemented.");
     }
 }

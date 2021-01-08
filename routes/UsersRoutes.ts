@@ -1,17 +1,19 @@
 import { CommonRoutesConfig } from './CommonRoutesConfig';
 import express from 'express';
 import { LocalUsers } from '../repository/users/LocalUsers';
-import { IUserModel } from '../models/IUserModel';
-import { RepoBase } from '../repository/IRepository';
-import { UserValidator} from '../validators/UserValidator';
+import { UserModel } from '../models/UserModel';
+import { Repository } from '../repository/Repository';
+import { Validator } from '../validators/Validator';
+import { UserValidator } from '../validators/UserValidator';
 
 export class UsersRoutes extends CommonRoutesConfig {
-    repo: RepoBase<IUserModel, string>;
-    validator: UserValidator;
+    repo!: Repository<UserModel, string>;
+    validator!: Validator;
     constructor(app: express.Application) {
-        super(app, 'UsersRoutes');
-        this.repo = new LocalUsers();
-        this.validator = new UserValidator();
+        super(app, 'UsersRoutes', (self: CommonRoutesConfig) => {
+            (self as UsersRoutes).repo = new LocalUsers();
+            (self as UsersRoutes).validator = new UserValidator();
+        });
     }
 
     configureRoutes() {
@@ -19,13 +21,10 @@ export class UsersRoutes extends CommonRoutesConfig {
             .get((req: express.Request, res: express.Response) => {
                 res.status(200).json(this.repo.list(req.query["order"]?.toString() ?? "asc"));
             })
-            .post((req: express.Request, res: express.Response) => {
-                const user: IUserModel = req.body;
-                if(!this.validator.Validate(user)){
-                    return res.status(400).send(this.validator.GetMessage(user));
-                }
+            .post([this.validator.Validate, (req: express.Request, res: express.Response) => {
+                const user: UserModel = req.body;
                 res.status(200).send(this.repo.create(user));
-            });
+            }]);
 
         this.app.route(`/users/:userId`)
             .all((req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -34,20 +33,14 @@ export class UsersRoutes extends CommonRoutesConfig {
             .get((req: express.Request, res: express.Response) => {
                 res.status(200).send(this.repo.item(req.params.username));
             })
-            .put((req: express.Request, res: express.Response) => {
-                const user: IUserModel = req.body;
-                if(!this.validator.Validate(user)){
-                    return res.status(400).send(this.validator.GetMessage(user));
-                }
+            .put([this.validator.Validate, (req: express.Request, res: express.Response) => {
+                const user: UserModel = req.body;
                 res.status(200).send(this.repo.update(user));
-            })
-            .delete((req: express.Request, res: express.Response) => {
-                const user: IUserModel = req.body;
-                if(!this.validator.Validate(user)){
-                    return res.status(400).send(this.validator.GetMessage(user));
-                }
+            }])
+            .delete([this.validator.Validate, (req: express.Request, res: express.Response) => {
+                const user: UserModel = req.body;
                 res.status(200).send(this.repo.delete(user));
-            });
+            }]);
 
         return this.app;
     }

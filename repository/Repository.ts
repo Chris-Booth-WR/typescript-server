@@ -1,4 +1,4 @@
-export abstract class RepoBase<T, TKey> {
+export abstract class Repository<T, TKey> {
     list(order: string = ""): T[] {
         return [];
     }

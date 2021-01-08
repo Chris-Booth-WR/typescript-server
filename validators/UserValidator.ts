@@ -1,7 +1,10 @@
-import { IUserModel } from "../models/IUserModel";
+import { UserModel } from "../models/UserModel";
+import express from "express"
+import { Validator } from "./Validator";
 
-export class UserValidator {
-    GetMessage(user: IUserModel): object {
+export class UserValidator implements Validator {
+    Validate(req: express.Request, res: express.Response, next: any) : express.Response | void {
+        const user: UserModel = req.body;
         let message: {
             message: string | undefined,
             fields: string[] | undefined
@@ -20,17 +23,8 @@ export class UserValidator {
             if (!user.password || user.password.length === 0) message.fields.push('password');
             message.message = message.fields.length == 1 ? 'Missing fields' : 'Missing fields';
         }
-
-        return { message };
-    }
-    public Validate(user: IUserModel): boolean {
-        if (!user) return false;
-        if (!user.username || user.username.length === 0) return false;
-        if (!user.firstName || user.firstName.length === 0) return false;
-        if (!user.lastName || user.lastName.length === 0) return false;
-        if (!user.role || user.role.length === 0) return false;
-        if (!user.password || user.password.length === 0) return false;
-
-        return true;
+        if (message.message) {
+            return res.sendStatus(400).json(message);
+        }
     }
 }

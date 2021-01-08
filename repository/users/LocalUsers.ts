@@ -1,10 +1,10 @@
 import { Error } from "../../common/Error";
-import { IUserModel } from "../../models/IUserModel";
+import { UserModel } from "../../models/UserModel";
 import { User } from "../../models/User";
-import { RepoBase } from "../IRepository";
+import { Repository } from "../Repository";
 
-export class LocalUsers extends RepoBase<IUserModel, string> {
-    private users: IUserModel[];
+export class LocalUsers extends Repository<UserModel, string> {
+    private users: UserModel[];
     constructor() {
         super();
         this.users = [
@@ -18,14 +18,14 @@ export class LocalUsers extends RepoBase<IUserModel, string> {
     /**
      * list
      */
-    public list(order: string = ""): IUserModel[] {
+    public list(order: string = ""): UserModel[] {
         return this.users.sort((a, b) => order == "desc" ? b.username.localeCompare(a.username) : a.username.localeCompare(b.username));
     }
 
     /**
      * item
      */
-    public item(id: string): IUserModel {
+    public item(id: string): UserModel {
         const user = this.users.find(item => item.username == id);
         if (user)
             return user;
@@ -36,7 +36,7 @@ export class LocalUsers extends RepoBase<IUserModel, string> {
     /**
      * update
      */
-    public update(item: IUserModel): void {
+    public update(item: UserModel): void {
         const user = this.users.find(user => user.username == item.username);
         if (user) {
             this.users[this.users.indexOf(user)] = item;
@@ -46,8 +46,8 @@ export class LocalUsers extends RepoBase<IUserModel, string> {
     /**
      * delete
      */
-    public delete(item: IUserModel): void {
-        let users: IUserModel[] = [];
+    public delete(item: UserModel): void {
+        let users: UserModel[] = [];
         this.users.forEach(user => {
             if (user.username != item.username) {
                 users.push(user);
@@ -59,7 +59,7 @@ export class LocalUsers extends RepoBase<IUserModel, string> {
     /**
      * create
      */
-    public create(item: IUserModel): IUserModel {
+    public create(item: UserModel): UserModel {
         this.users.push(item);
         return item;
     }

@@ -10,7 +10,7 @@ import { CommonRoutesConfig } from './routes/CommonRoutesConfig';
 import { UsersRoutes } from './routes/UsersRoutes';
 import { QuoteRoutes } from './routes/QuoteRoutes';
 import { PayinMethodsRoutes } from './routes/PayinMethodsRoutes';
-import { AuthRoutes } from './routes/AuthRoutes';
+import { AuthenticationRoutes } from './routes/AuthenticationRoutes';
 
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
@@ -34,7 +34,7 @@ app.use(expressWinston.logger({
 routes.push(new UsersRoutes(app));
 routes.push(new QuoteRoutes(app));
 routes.push(new PayinMethodsRoutes(app));
-routes.push(new AuthRoutes(app));
+routes.push(new AuthenticationRoutes(app));
 
 app.use(expressWinston.errorLogger({
     transports: [

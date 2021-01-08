@@ -1,7 +1,7 @@
-import { IUserModel } from "./IUserModel";
+import { UserModel } from "./UserModel";
 
 
-export class User implements IUserModel {
+export class User implements UserModel {
     firstName: string;
     lastName: string;
     username: string;

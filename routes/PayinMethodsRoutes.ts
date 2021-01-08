@@ -4,7 +4,7 @@ import {authenticateJWT} from "../middleware/AuthenticaionMiddleware"
 
 export class PayinMethodsRoutes extends CommonRoutesConfig {    
     constructor(app: express.Application) {
-        super(app, 'MarketingRoutes');
+        super(app, 'MarketingRoutes', () => {});
     }
 
     configureRoutes() {

@@ -1,4 +1,4 @@
-export interface IMarketingRequest {
+export interface MarketingRequest {
     sendCountryIso2: string;
     receiveCountryIso2: string;
     receiveCountryIso3: string;
